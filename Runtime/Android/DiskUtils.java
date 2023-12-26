@@ -20,12 +20,12 @@ public class DiskUtils {
      * @param external  Queries external disk if true, queries internal disk otherwise.
      * @return Total disk space in MB.
      */
-    public static int totalSpace(boolean external)
+    public static int totalSpace(Context context)
     {
         long totalBlocks;
         long blockSize;
 
-        StatFs statFs = getStats(external);
+        StatFs statFs = getStats(context);
         if (Build.VERSION.SDK_INT < 18){
             totalBlocks = statFs.getBlockCount();
             blockSize = statFs.getBlockSize();
@@ -72,12 +72,12 @@ public class DiskUtils {
      * @param external  Queries external disk if true, queries internal disk otherwise.
      * @return Available disk space in MB.
      */
-    public static int availableSpace(boolean external)
+    public static int availableSpace(Context context)
     {
         long availableBlocks;
         long blockSize;
 
-        StatFs statFs = getStats(external);
+        StatFs statFs = getStats(context);
         if (Build.VERSION.SDK_INT < 18){
             availableBlocks = statFs.getAvailableBlocks();
             blockSize = statFs.getBlockSize();
@@ -98,12 +98,12 @@ public class DiskUtils {
      * @param external  Queries external disk if true, queries internal disk otherwise.
      * @return Busy disk space in MB.
      */
-    public static int busySpace(boolean external)
+    public static int busySpace(Context context)
     {
         BigInteger total;
         BigInteger free;
 
-        StatFs statFs = getStats(external);
+        StatFs statFs = getStats(context);
 
         if (Build.VERSION.SDK_INT < 18){
             total = BigInteger.valueOf(statFs.getBlockCount()).multiply(BigInteger.valueOf(statFs.getBlockSize()));
