@@ -5,6 +5,7 @@ package com.activetheoryinc.diskutils;
  */
 
 
+import android.content.Context;
 import android.os.Build;
 import android.os.Environment;
 import android.os.StatFs;
@@ -119,11 +120,11 @@ public class DiskUtils {
         return ret.intValue();
     }
 
-    private static StatFs getStats(boolean external){
+    private static StatFs getStats(Context context){
         String path;
 
-        if (external){
-            path = Environment.getExternalStorageDirectory().getAbsolutePath();
+        if (context != null){
+            path = context.getExternalFilesDir(null).getAbsolutePath();
         }
         else{
             path = Environment.getRootDirectory().getAbsolutePath();
