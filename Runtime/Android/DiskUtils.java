@@ -124,7 +124,13 @@ public class DiskUtils {
         String path;
 
         if (context != null){
-            path = context.getExternalFilesDir(null).getAbsolutePath();
+            if (Build.VERSION.SDK_INT < 29){
+                path = Environment.getExternalStorageDirectory().getAbsolutePath();
+            }
+            else
+            {
+                path = context.getExternalFilesDir(null).getAbsolutePath();
+            }
         }
         else{
             path = Environment.getRootDirectory().getAbsolutePath();
