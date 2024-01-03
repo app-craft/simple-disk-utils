@@ -193,7 +193,7 @@ namespace SimpleDiskUtils
 	/// <param name="isExternalStorage">If set to <c>true</c> is external storage.</param>
 	public static int CheckAvailableSpace(bool isExternalStorage = true){
 		AndroidJavaClass dataUtils = new AndroidJavaClass ($"{package_domain}.DiskUtils");
-		return dataUtils.CallStatic<int>("availableSpace", isExternalStorage);
+		return dataUtils.CallStatic<int>("availableSpace", isExternalStorage ? GetContext() : null);
 	}
 
 	/// <summary>
@@ -203,7 +203,7 @@ namespace SimpleDiskUtils
 	/// <param name="isExternalStorage">If set to <c>true</c> is external storage.</param>
 	public static int CheckTotalSpace(bool isExternalStorage = true){
 	AndroidJavaClass dataUtils = new AndroidJavaClass ($"{package_domain}.DiskUtils");
-	return dataUtils.CallStatic<int>("totalSpace", isExternalStorage);
+	return dataUtils.CallStatic<int>("totalSpace", isExternalStorage ? GetContext() : null);
 	}
 
 	/// <summary>
@@ -213,9 +213,14 @@ namespace SimpleDiskUtils
 	/// <param name="isExternalStorage">If set to <c>true</c> is external storage.</param>
 	public static int CheckBusySpace(bool isExternalStorage = true){
 	AndroidJavaClass dataUtils = new AndroidJavaClass ($"{package_domain}.DiskUtils");
-	return dataUtils.CallStatic<int>("busySpace", isExternalStorage);
+	return dataUtils.CallStatic<int>("busySpace", isExternalStorage ? GetContext() : null);
 	}
 
+	private static AndroidJavaObject GetContext(){
+	AndroidJavaClass unityPlayer = new AndroidJavaClass("com.unity3d.player.UnityPlayer");
+    AndroidJavaObject activity = unityPlayer.GetStatic<AndroidJavaObject>("currentActivity");
+    return activity.Call<AndroidJavaObject>("getApplicationContext");
+	}
 	
 #elif UNITY_IOS
 	
